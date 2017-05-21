@@ -9,8 +9,6 @@ Created on Tue May 16 01:38:23 2017
 import random
 import re
 
-# stupid comment
-
 # Different ways to ask the user for letters in word
 # Returns a string
 def ask_letters():
