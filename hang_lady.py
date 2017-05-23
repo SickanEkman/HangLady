@@ -101,19 +101,39 @@ def letter_freq():
     else:
         return 'e'
 
+def prepare_game():
+    """Gets number of letters"""
+    num_letters = 0
+    try:
+        num_letters = int(input(ask_letters()))
+        print("Number of letters:", num_letters * "_ ")
+    except ValueError:
+        print("Value error message:", not_int())
+        prepare_game()
+
+# Initializing variables
 num_guesses = []
 word = []
 
+# main (later on I might move this stuff into the class Game.)
+print("Hi you. This is a game. Think of a word.") # greets the player
+prepare_game()
+
+'''
+# To be continued...
+
+def first_guess():
+    print(letter_freq())
+
+
+
 class Game(object):
-    def start_game():
+    """A Hang Lady Game"""
+    def __init__(self):
+        
         try:
-            num_letters = float(input(ask_letters()))
-            print("Number of letters:", num_letters)
+            num_letters = int(input(ask_letters())) #asks for number of letters
         except ValueError:
             print("Value error message:", not_int())
-            start_game()
-
-    def first_guess():
-        print(letter_freq())
-
-
+        print("Number of letters: " + str(num_letters)) # control print statement
+'''
