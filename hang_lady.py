@@ -36,89 +36,53 @@ def not_int():
         return "Just a number, please. \n"
     if number == 3:
         return "Not an integer. Try again. \n"
-    
-# Uses predefined weights for different letters in Swe alphabet
-# Returns a letter - higher prob for common letters
-def letter_freq():
-    number = random.randrange(0, 100000, 1) / 1000
-    print("number is:", number)
-    if number >= 99.979:
-        return 'q'
-    elif number >= 99.909:
-        return 'z'
-    elif number >= 99.767:
-        return 'w'
-    elif number >= 99.608:
-        return 'x'
-    elif number >= 98.994:
-        return 'j'
-    elif number >= 98.286:
-        return 'y'
-    elif number >= 96.981:
-        return 'ö'
-    elif number >= 95.643:
-        return 'å'
-    elif number >= 94.157:
-        return 'c'
-    elif number >= 92.622:
-        return 'b'
-    elif number >= 90.825:
-        return 'ä'
-    elif number >= 88.986:
-        return 'p'
-    elif number >= 87.067:
-        return 'u'
-    elif number >= 85.04:
-        return 'f'
-    elif number >= 82.95:
-        return 'h'
-    elif number >= 80.535:
-        return 'v'
-    elif number >= 77.673:
-        return 'g'
-    elif number >= 74.533:
-        return 'k'
-    elif number >= 71.062:
-        return 'm'
-    elif number >= 66.58:
-        return 'o'
-    elif number >= 61.878:
-        return 'd'
-    elif number >= 56.603:
-        return 'l'
-    elif number >= 50.786:
-        return 'i'
-    elif number >= 44.196:
-        return 's'
-    elif number >= 36.505:
-        return 't'
-    elif number >= 28.074:
-        return 'r'
-    elif number >= 19.532:
-        return 'n'
-    elif number >= 10.149:
-        return 'a'
-    else:
-        return 'e'
+
 
 def prepare_game():
     """Gets number of letters"""
     num_letters = 0
     try:
         num_letters = int(input(ask_letters()))
-        print("Number of letters:", num_letters * "_ ")
+        return num_letters
     except ValueError:
         print("Value error message:", not_int())
         prepare_game()
 
+def create_dic(num_letters):
+    """Creates a suitable length dictionary"""
+    i = 1
+    while i <= num_letters:
+        word[i] = "_ "
+        i += 1
+    return word
+
+def show_word(dictionary):
+    """Creates a nice output to print"""
+    x = 1
+    numbers_under = []
+    letters = dictionary.values()
+    for i in letters:
+        numbers_under.append(str(x))
+        x += 1
+    numbers_under_joined = ' '.join(str(numbers_under))
+    letters_joined = ' '.join(letters)
+    return letters_joined, numbers_under_joined
+
 # Initializing variables
 num_guesses = []
-word = []
+word = {}
 
-# main (later on I might move this stuff into the class Game.)
+# main (later on I might move this stuff into the class: Game.)
 print("Hi you. This is a game. Think of a word.") # greets the player
-prepare_game()
+num_letters = prepare_game() # gets the length of thw word
+dictionary = create_dic(num_letters) # creates suitable length dictionary with placeholders
 
+# Repeat following steps
+presentation, numbers_under_joined = show_word(dictionary) # creates nice output from dictionary
+print(presentation) # shows the word to user
+print(numbers_under_joined)
+
+     
 '''
 # To be continued...
 
