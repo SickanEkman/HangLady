@@ -52,7 +52,7 @@ def create_dic(num_letters):
     """Creates a suitable length dictionary"""
     i = 1
     while i <= num_letters:
-        word[i] = "_ "
+        word[i] = "_"
         i += 1
     return word
 
@@ -64,7 +64,7 @@ def show_word(dictionary):
     for i in letters:
         numbers_under.append(str(x))
         x += 1
-    numbers_under_joined = ' '.join(str(numbers_under))
+    numbers_under_joined = ' '.join(numbers_under)
     letters_joined = ' '.join(letters)
     return letters_joined, numbers_under_joined
 
@@ -79,7 +79,7 @@ dictionary = create_dic(num_letters) # creates suitable length dictionary with p
 
 # Repeat following steps
 presentation, numbers_under_joined = show_word(dictionary) # creates nice output from dictionary
-print(presentation) # shows the word to user
+print("\n" + presentation) # shows the word to user
 print(numbers_under_joined)
 
      
