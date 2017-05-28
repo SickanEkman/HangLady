@@ -50,8 +50,23 @@ def regexpression():
     with read_corpus as fin:
         #fin = re.findall(r'.....')
         for line in fin:
-            #print(line)
+            print(line)
 
 create_corpus()
 print(letter_freq())
 regexpression()
+
+'''to be continued:
+
+yesno = input("Is '" + letter + "' in the word?\nAnswer 'yes' or 'no'\n")
+
+placement_question = input("Where in the word is the letter? Write the number, or 
+numbers - separated by whitespace - if it's in more than one place.\n")
+
+letter_placement = []
+letter_placement = placement_question.split()
+
+for place in letter_placement:
+    dictionary(letter_placement) = letter'''
+
+
