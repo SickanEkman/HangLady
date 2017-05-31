@@ -12,31 +12,23 @@ import re
 # Different ways to ask the user for letters in word
 # Returns a string
 def ask_letters():
-    number = random.randrange(1, 6, 1)
-    if number == 1:
-        return "How many letters are in the word? \n"
-    if number == 2:
-        return "Number of letters? \n"
-    if number == 3:
-        return "How many letters? \n"
-    if number == 4:
-        return "What's the word? Just kidding. How many letters? \n"
-    if number == 5:
-        return "Number of letters in the word? \n"
-    if number == 6:
-        return "Let's do this! How many letters? \n"
+    """Different ways to ask for starting letters"""
+    choices = ["How many letters are in the word? \n",
+               "Number of letters? \n",
+               "How many letters? \n",
+               "What's the word? Just kidding. How many letters? \n",
+               "Number of letters in the word? \n",
+               "Let's do this! How many letters? \n"]
+    return random.choice(choices)
 
 # Different ways to tell the user they have to write an int
 # Returns a string
 def not_int():
-    number = random.randrange(1, 3, 1)
-    if number == 1:
-        return "Need you to write a positive number. \n"
-    if number == 2:
-        return "Just a number, please. \n"
-    if number == 3:
-        return "Not an integer. Try again. \n"
-
+    """Different ways to ask for an int"""
+    choices = ["Need you to write a positive number. \n",
+               "Just a number, please. \n",
+               "Not an integer. Try again. \n"]
+    return random.choice(choices)
 
 def prepare_game():
     """Gets number of letters"""
@@ -45,8 +37,8 @@ def prepare_game():
         num_letters = int(input(ask_letters()))
         return num_letters
     except ValueError:
-        print("Value error message:", not_int())
-        prepare_game()
+        print(not_int())
+        return prepare_game()
 
 def create_dic(num_letters):
     """Creates a suitable length dictionary"""
@@ -73,8 +65,8 @@ num_guesses = []
 word = {}
 
 # main (later on I might move this stuff into the class: Game.)
-print("Hi you. This is a game. Think of a word.") # greets the player
-num_letters = prepare_game() # gets the length of thw word
+print("Hi awesome person! Think of a hang-lady-type word. Okay?") # greets the player
+num_letters = prepare_game() # gets the length of thw word\
 dictionary = create_dic(num_letters) # creates suitable length dictionary with placeholders
 
 # Repeat following steps
