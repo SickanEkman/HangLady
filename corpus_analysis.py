@@ -11,6 +11,8 @@ Created on Thu May 25 14:38:52 2017
 import hang_lady
 
 
+
+
 '''def regexpression():
     """picks the only possible words after hit"""
     with r_corpus as fin:

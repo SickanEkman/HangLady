@@ -38,3 +38,8 @@ def letter_freq():
     return s[0][0]
 
 w_corpus = open('right_len_corpus.txt', 'w') # original corpus file opened to read only
+
+               '''def create_regexp():
+    length = len(game_d)
+    regexp = ("." * length)
+    print("Regexp:", regexp)'''
