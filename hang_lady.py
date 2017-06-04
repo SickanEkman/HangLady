@@ -68,7 +68,7 @@ def start_game():
 def create_corpus():
     """ID's right len words from original corpus and creates corpus dictionary"""
     corpus_d = {} # dictionary with all words with right length
-    with open('test_1000.txt', 'r') as fin:
+    with open('./project_korpusar/only_words.conll', 'r') as fin:
         for line in fin:
             line = line.rstrip('\n')
             if len(line) == num_letters:
@@ -89,13 +89,17 @@ def letter_freq():
     for i in corpus_d:
         entry = i * corpus_d.get(i) # counts the key, 'value' times
         for letter in entry:
-            if letter not in freq_d:
+            if letter in used_letters:
+                pass
+            elif letter not in freq_d:
                 freq_d[letter] = 1
             else:
                 freq_d[letter] = freq_d[letter] + 1
     frequency_list = [(k, freq_d[k]) for k in sorted(freq_d, key=freq_d.get, reverse=True)]
     # print(len(frequency_list), frequency_list)
     # print(frequency_list[0][0])
+    if frequency_list[0][0] not in used_letters:
+        used_letters.append(frequency_list[0][0])
     return frequency_list[0][0]
 
 def make_guess(most_common_letter):
@@ -105,9 +109,9 @@ def make_guess(most_common_letter):
     if yesno.strip() == "y" or yesno == "Y":
         placement_question = input("Where in the word is the letter? Write the number, or numbers - separated by whitespace - if it's in more than one place.\n")
         placement_l = placement_question.split()
-        return placement_l
+        return 1, placement_l
     else:
-        pass #this has to be changed later
+        return 0, create_miss_regexp(most_common_letter)
 
 def mod_game_d():
     """Modifies the game dictionary with any new correct letters"""
@@ -115,10 +119,10 @@ def mod_game_d():
         i = int(i)
         game_d[i] = most_common_letter
         print(game_d[i])
-    return(game_d)
+        return(game_d)
 
 def create_regexp():
-    """Creates first regexp"""
+    """Creates regexp for letter IN word, from game dictionary"""
     regexp_l = []
     for k,v in game_d.items():
         if v == "_":
@@ -129,27 +133,76 @@ def create_regexp():
     print(regexp)
     return regexp
 
+def create_miss_regexp(wrong_letter):
+    """Creates regexp for letter NOT in word from make_guess"""
+    regexp = "[^" + wrong_letter + "]"
+    print(regexp)
+    return regexp
 
-    
+def mod_corpus_d():
+    """Deletes all enties in corpus dictionary that doesn't match regexp"""
+    delete_l = []
+    expression = re.compile(regexp)
+    for k,v in corpus_d.items():
+        if not re.match(expression, k):
+            delete_l.append(k)
+            #print(k)
+        else:
+            pass
+    for i in delete_l:
+        del corpus_d[i]
+    return corpus_d
 
 # Initializing variables
 num_guesses = []
+used_letters = []
+regexp = "."
 
 # main (later on I might move this stuff into the class: Game.)
 game_d = start_game() # initiates, created 
 num_letters = len(game_d)
-corpus_d = create_corpus()
-most_common_letter = letter_freq()
-# make_guess(most_common_letter)
-    # Repeat following steps
 presentation, numbers_under_joined = show_word(game_d) # creates nice output from dictionary
 print("\n" + presentation) # shows the word to user
 print(numbers_under_joined)
+corpus_d = create_corpus()
+
+while "." in regexp:
+    most_common_letter = letter_freq() #counts letter freq in corpus dictionary, returns most common letter
+    rightWrong, placement_l = make_guess(most_common_letter)
+    # print(placement_l)
+    if rightWrong == 1:
+        mod_game_d()
+        # print(game_d)
+        regexp = create_regexp()
+    else:
+        pass
+    corpus_d = mod_corpus_d()
+    print("one run")
+print("done")
+
+'''most_common_letter = letter_freq() #counts letter freq in corpus dictionary, returns most common letter
 placement_l = make_guess(most_common_letter)
-print(placement_l)
+# print(placement_l)
 mod_game_d()
-print(game_d)
+# print(game_d)
 regexp = create_regexp()
+corpus_d = mod_corpus_d()
+#and again...
+most_common_letter = letter_freq() #counts letter freq in corpus dictionary, returns most common letter
+placement_l = make_guess(most_common_letter)
+# print(placement_l)
+mod_game_d()
+# print(game_d)
+regexp = create_regexp()
+corpus_d = mod_corpus_d()
+#and again
+most_common_letter = letter_freq() #counts letter freq in corpus dictionary, returns most common letter
+placement_l = make_guess(most_common_letter)
+# print(placement_l)
+mod_game_d()
+# print(game_d)
+regexp = create_regexp()
+corpus_d = mod_corpus_d()'''
 
 '''
 # To be continued...
