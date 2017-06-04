@@ -41,18 +41,19 @@ def prepare_game():
         return prepare_game()
 
 def create_dic(num_letters):
-    """Creates a suitable length dictionary"""
+    """Creates a dictionary with same number entries as letters in word"""
+    game_d = {}
     i = 1
     while i <= num_letters:
-        word[i] = "_"
+        game_d[i] = "_"
         i += 1
-    return word
+    return game_d
 
-def show_word(dictionary):
+def show_word(game_d):
     """Creates a nice output to print"""
     x = 1
     numbers_under = []
-    letters = dictionary.values()
+    letters = game_d.values()
     for i in letters:
         numbers_under.append(str(x))
         x += 1
@@ -60,23 +61,75 @@ def show_word(dictionary):
     letters_joined = ' '.join(letters)
     return letters_joined, numbers_under_joined
 
+def start_game():
+    """Calls the first functions, to start a game"""
+    name = input('Hi human person! What is your "name"?\n')
+    print("Hi " + name + "! Think of a hang-lady-type word. Okay?") # greets the player
+    num_letters = prepare_game() # gets the length of thw word\
+    game_d = create_dic(num_letters) # creates suitable length dictionary with "_" placeholders
+    return game_d
+
+def create_corpus():
+    """ID's right len words from original corpus and creates corpus dictionary"""
+    corpus_d = {} # dictionary with all words with right length
+    with open('test_1000.txt', 'r') as fin:
+        for line in fin:
+            line = line.rstrip('\n')
+            if len(line) == num_letters:
+                line = line.lower()
+                print(line) # checks if the program works to this point
+                if line not in corpus_d:
+                    corpus_d[line] = 1
+                else:
+                    corpus_d[line] = corpus_d[line] + 1
+            else:
+                pass
+    fin.close()
+    return corpus_d
+
+def letter_freq():
+    """counts letter freq in corpus dictionary, returns most common letter"""
+    freq_d = {} # dictionary with letters as keys and frequencies as values
+    for i in corpus_d:
+        entry = i * corpus_d.get(i) # counts the key, 'value' times
+        print(entry)
+        for letter in entry:
+            if letter not in freq_d:
+                freq_d[letter] = 1
+            else:
+                freq_d[letter] = freq_d[letter] + 1
+    s = [(k, freq_d[k]) for k in sorted(freq_d, key=freq_d.get, reverse=True)]
+    print(len(s), s)
+    print(s[0][0])
+    return s[0][0]
+
 # Initializing variables
 num_guesses = []
-word = {}
 
 # main (later on I might move this stuff into the class: Game.)
-print("Hi awesome person! Think of a hang-lady-type word. Okay?") # greets the player
-num_letters = prepare_game() # gets the length of thw word\
-dictionary = create_dic(num_letters) # creates suitable length dictionary with placeholders
-
-# Repeat following steps
-presentation, numbers_under_joined = show_word(dictionary) # creates nice output from dictionary
+game_d = start_game()
+num_letters = len(game_d)
+corpus_d = create_corpus()
+most_common_letter = letter_freq()
+    # Repeat following steps
+presentation, numbers_under_joined = show_word(game_d) # creates nice output from dictionary
 print("\n" + presentation) # shows the word to user
 print(numbers_under_joined)
 
      
 '''
 # To be continued...
+
+yesno = input("Is '" + letter + "' in the word?\nAnswer 'yes' or 'no'\n")
+
+placement_question = input("Where in the word is the letter? Write the number, or 
+numbers - separated by whitespace - if it's in more than one place.\n")
+
+letter_placement = []
+letter_placement = placement_question.split()
+
+for place in letter_placement:
+    dictionary(letter_placement) = letter
 
 def first_guess():
     print(letter_freq())

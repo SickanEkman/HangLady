@@ -37,4 +37,4 @@ def letter_freq():
     print(s[0][0])
     return s[0][0]
 
-
+w_corpus = open('right_len_corpus.txt', 'w') # original corpus file opened to read only
