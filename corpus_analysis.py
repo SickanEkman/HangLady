@@ -7,11 +7,27 @@ Created on Thu May 25 14:38:52 2017
 """
 
 # Frequency analysis of korpus
+import re
+from hang_lady import create_corpus
 
-import hang_lady
+def mod_corpus_d():
+    delete_l = []
+    expression = re.compile(regexp)
+    for k,v in corpus_d.items():
+        if not re.match(expression, k):
+            delete_l.append(k)
+            #print(k)
+        else:
+            pass
+    for i in delete_l:
+        del corpus_d[i]
+    print(corpus_d)
 
+# initializing variables
 
-
+regexp = "e........"
+corpus_d = create_corpus()
+mod_corpus_d()
 
 '''def regexpression():
     """picks the only possible words after hit"""

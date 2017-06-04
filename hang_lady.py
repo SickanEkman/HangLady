@@ -129,7 +129,7 @@ def create_regexp():
     print(regexp)
     return regexp
 
-def mod_corpus_d():
+
     
 
 # Initializing variables
